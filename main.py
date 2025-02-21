@@ -18,13 +18,16 @@ from PIL import Image
 
 
 training_glioma = []
-for i in range(0, 1000):
+for i in range(10, 1321):
     val = str(i)
-    while(len(val) !=3):
+    while(len(val) !=4):
         val = "0"+val
-    training_glioma.append("Training/glioma/Tr_gl_0" + val+ ".jpg")
-for i in range(0,10):
+    training_glioma.append("Training/glioma/Tr-gl_" + val+ ".jpg")
+    print("Training/glioma/Tr-gl_" + val+ ".jpg")
 
+
+for i in range(0,2):
     img = Image.open(training_glioma[i])
 
     img.show()
+
