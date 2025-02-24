@@ -169,7 +169,7 @@ plt.tight_layout()
 plt.savefig("pituitary.png")
 plt.close()
 
-for imgnum in range(0, 4):
+for imgnum in range(0, 6):
     fig, axs = plt.subplots(4,4)
     for i in range(0, 4):
         k=random.randint(0,1000)
