@@ -54,6 +54,7 @@ for i in range(10,1457): #1456 images, first 10 ommitted
     #print(training_pituitary[i])
 
 
+"""
 #showing images
 
 for i in range(0,2):
@@ -108,32 +109,5 @@ for i in range(0, len(training_pituitary)):
     #print(img_tensor)
     traintensor_pituitary.append(img_tensor)
 
-"""
-
-fig, axs = plt.subplots(4,4)
-plt.title("Glioma")
-k=0
-for i in range(0, 4):
-    for j in range(0,4):
-        img = Image.open(training_glioma[k])
-        axs[i,j].imshow(img)
-        axs[i,j].axis('off')
-        k = k + 1
 
 
-plt.savefig("glioma.png")
-plt.close()
-
-"""
-fig, axs = plt.subplots(4,4)
-plt.title("Meningioma")
-k=0
-for i in range(0, 4):
-    for j in range(0,4):
-        img = Image.open(training_meningioma[k])
-        axs[i,j].imshow(img)
-        axs[i,j].axis('off')
-        k = k + 1
-plt.savefig("meningioma.png")
-plt.close()
-"""
