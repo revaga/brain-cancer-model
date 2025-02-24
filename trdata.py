@@ -9,7 +9,7 @@ import torch
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from torch.utils.data import Dataset, DataLoader
-import os
+import random
 
 from PIL import Image 
 import torchvision.transforms as transforms
@@ -166,4 +166,44 @@ for i in range(0, 4):
 
 plt.tight_layout()
 plt.savefig("pituitary.png")
+plt.close()
+
+
+fig, axs = plt.subplots(4,4)
+for i in range(0, 4):
+    k=random.randint(0,1000)
+    for j in range(0,4):
+        if(i == 0):
+            img = Image.open(training_glioma[k])
+            axs[i,j].imshow(img)
+            axs[i,j].axis('off')
+            strk = "glioma: " + str(k)
+            axs[i,j].set_title(strk)
+         
+        elif i == 1:
+            img = Image.open(training_meningioma[k])
+            axs[i,j].imshow(img)
+            axs[i,j].axis('off')
+            strk = "meningioma: " + str(k)
+            axs[i,j].set_title(strk)
+    
+        elif i == 2:
+            img = Image.open(training_notumor[k])
+            axs[i,j].imshow(img)
+            axs[i,j].axis('off')
+            strk = "notumor: " + str(k)
+            axs[i,j].set_title(strk)
+
+
+        elif i == 3:
+            img = Image.open(training_pituitary[k])
+            axs[i,j].imshow(img)
+            axs[i,j].axis('off')
+            strk = "pituitary: " + str(k)
+            axs[i,j].set_title(strk)
+
+        k = k + 1
+
+plt.tight_layout()
+plt.savefig("all.png")
 plt.close()
