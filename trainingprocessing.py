@@ -25,6 +25,7 @@ for i in range(10, 1321): #skipped first 10
         val = "0"+val
     training_glioma.append("Training/glioma/Tr-gl_" + val+ ".jpg")
 
+"""
     
 training_meningioma = []
 for i in range(10, 1339): #1338 images, skipped first 10
@@ -73,7 +74,7 @@ for i in range(0,2):
     img = Image.open(training_pituitary[i])
     img.show()
 
-"""
+
 
 # Convert training images into tensors 
 # ref: https://www.geeksforgeeks.org/converting-an-image-to-a-torch-tensor-in-python/
