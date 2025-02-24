@@ -25,7 +25,6 @@ for i in range(10, 1321): #skipped first 10
         val = "0"+val
     training_glioma.append("Training/glioma/Tr-gl_" + val+ ".jpg")
 
-"""
     
 training_meningioma = []
 for i in range(10, 1339): #1338 images, skipped first 10
@@ -52,7 +51,7 @@ for i in range(10,1457): #1456 images, first 10 ommitted
         val = "0" + val
     training_pituitary.append("Training/pituitary/Tr-pi_" + val+ ".jpg")
     #print(training_pituitary[i])
-
+"""
 
 #showing images
 
@@ -74,6 +73,7 @@ for i in range(0,2):
     img.show()
 
 
+"""
 
 # Convert training images into tensors 
 # ref: https://www.geeksforgeeks.org/converting-an-image-to-a-torch-tensor-in-python/
@@ -108,7 +108,7 @@ for i in range(0, len(training_pituitary)):
     #print(img_tensor)
     traintensor_pituitary.append(img_tensor)
 
-"""
+
 
 fig, axs = plt.subplots(4,4)
 plt.title("Glioma")
@@ -120,11 +120,11 @@ for i in range(0, 4):
         axs[i,j].axis('off')
         k = k + 1
 
-
+plt.tight_layout()
 plt.savefig("glioma.png")
 plt.close()
 
-"""
+
 fig, axs = plt.subplots(4,4)
 plt.title("Meningioma")
 k=0
@@ -134,6 +134,36 @@ for i in range(0, 4):
         axs[i,j].imshow(img)
         axs[i,j].axis('off')
         k = k + 1
+plt.tight_layout()
 plt.savefig("meningioma.png")
 plt.close()
-"""
+
+
+fig, axs = plt.subplots(4,4)
+plt.title("No Tumor")
+k=0
+for i in range(0, 4):
+    for j in range(0,4):
+        img = Image.open(training_notumor[k])
+        axs[i,j].imshow(img)
+        axs[i,j].axis('off')
+        k = k + 1
+
+plt.tight_layout()
+plt.savefig("notumor.png")
+plt.close()
+
+
+fig, axs = plt.subplots(4,4)
+plt.title("Pituitary")
+k=0
+for i in range(0, 4):
+    for j in range(0,4):
+        img = Image.open(training_pituitary[k])
+        axs[i,j].imshow(img)
+        axs[i,j].axis('off')
+        k = k + 1
+
+plt.tight_layout()
+plt.savefig("pituitary.png")
+plt.close()
