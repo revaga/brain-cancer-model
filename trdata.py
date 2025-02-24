@@ -78,7 +78,8 @@ for i in range(0,2):
 # Convert training images into tensors 
 # ref: https://www.geeksforgeeks.org/converting-an-image-to-a-torch-tensor-in-python/
 transform = transforms.Compose([
-    transforms.PILToTensor()
+    transforms.PILToTensor(),
+    transforms.Resize((512,512))
 ])
 
 traintensor_glioma = []
@@ -168,42 +169,43 @@ plt.tight_layout()
 plt.savefig("pituitary.png")
 plt.close()
 
+for imgnum in range(0, 4):
+    fig, axs = plt.subplots(4,4)
+    for i in range(0, 4):
+        k=random.randint(0,1000)
+        for j in range(0,4):
+            if(i == 0):
+                img = Image.open(training_glioma[k])
+                axs[i,j].imshow(img)
+                axs[i,j].axis('off')
+                strk = "glioma: " + str(k)
+                axs[i,j].set_title(strk)
+            
+            elif i == 1:
+                img = Image.open(training_meningioma[k])
+                axs[i,j].imshow(img)
+                axs[i,j].axis('off')
+                strk = "meningioma: " + str(k)
+                axs[i,j].set_title(strk)
+        
+            elif i == 2:
+                img = Image.open(training_notumor[k])
+                axs[i,j].imshow(img)
+                axs[i,j].axis('off')
+                strk = "notumor: " + str(k)
+                axs[i,j].set_title(strk)
 
-fig, axs = plt.subplots(4,4)
-for i in range(0, 4):
-    k=random.randint(0,1000)
-    for j in range(0,4):
-        if(i == 0):
-            img = Image.open(training_glioma[k])
-            axs[i,j].imshow(img)
-            axs[i,j].axis('off')
-            strk = "glioma: " + str(k)
-            axs[i,j].set_title(strk)
-         
-        elif i == 1:
-            img = Image.open(training_meningioma[k])
-            axs[i,j].imshow(img)
-            axs[i,j].axis('off')
-            strk = "meningioma: " + str(k)
-            axs[i,j].set_title(strk)
-    
-        elif i == 2:
-            img = Image.open(training_notumor[k])
-            axs[i,j].imshow(img)
-            axs[i,j].axis('off')
-            strk = "notumor: " + str(k)
-            axs[i,j].set_title(strk)
 
+            elif i == 3:
+                img = Image.open(training_pituitary[k])
+                axs[i,j].imshow(img)
+                axs[i,j].axis('off')
+                strk = "pituitary: " + str(k)
+                axs[i,j].set_title(strk)
 
-        elif i == 3:
-            img = Image.open(training_pituitary[k])
-            axs[i,j].imshow(img)
-            axs[i,j].axis('off')
-            strk = "pituitary: " + str(k)
-            axs[i,j].set_title(strk)
+            k = k + 1
 
-        k = k + 1
-
-plt.tight_layout()
-plt.savefig("all.png")
-plt.close()
+    plt.tight_layout()
+    strsave = "all" + str(imgnum) + ".png"
+    plt.savefig(strsave)
+    plt.close()
