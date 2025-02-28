@@ -43,7 +43,6 @@ for i in range(10,1595): #1594 images, first 10 ommitted
     #print("Training/notumor/Tr-no_" + val+ ".jpg")
 
 
-
 training_pituitary = []
 for i in range(10,1457): #1456 images, first 10 ommitted
     val = str(i)
@@ -52,59 +51,43 @@ for i in range(10,1457): #1456 images, first 10 ommitted
     training_pituitary.append("Training/pituitary/Tr-pi_" + val+ ".jpg")
     #print(training_pituitary[i])
 """
-
 #showing images
 
 for i in range(0,2):
     img = Image.open(training_glioma[i])
     img.show()
-
-
-for i in range(0,2):
-    img = Image.open(training_meningioma[i])
-    img.show()
-
-for i in range(0,2):
-    img = Image.open(training_notumor[i])
-    img.show()
-
-for i in range(0,2):
-    img = Image.open(training_pituitary[i])
-    img.show()
-
-
 """
 
 # Convert training images into tensors 
 # ref: https://www.geeksforgeeks.org/converting-an-image-to-a-torch-tensor-in-python/
 transform = transforms.Compose([
     transforms.PILToTensor(),
-    transforms.Resize((512,512))
+    transforms.Resize((1000,1000))
 ])
 
 traintensor_glioma = []
 for i in range(0, len(training_glioma)):
-    img = Image.open(training_glioma[i])
+    img = Image.open(training_glioma[i]).convert('L')
     img_tensor = transform(img)
     #print(img_tensor)
     traintensor_glioma.append(img_tensor)
 
 traintensor_meningioma = []
 for i in range(0, len(training_meningioma)):
-    img = Image.open(training_meningioma[i])
+    img = Image.open(training_meningioma[i]).convert('L')
     img_tensor = transform(img)
     #print(img_tensor)
     traintensor_meningioma.append(img_tensor)
 
 traintensor_notumor = []
 for i in range(0, len(training_notumor)):
-    img = Image.open(training_notumor[i])
+    img = Image.open(training_notumor[i]).convert('L')
     img_tensor = transform(img)
     traintensor_notumor.append(img_tensor)
 
 traintensor_pituitary = []
 for i in range(0, len(training_pituitary)):
-    img = Image.open(training_pituitary[i])
+    img = Image.open(training_pituitary[i]).convert('L')
     img_tensor = transform(img)
     #print(img_tensor)
     traintensor_pituitary.append(img_tensor)
@@ -116,7 +99,7 @@ plt.title("Glioma")
 k=0
 for i in range(0, 4):
     for j in range(0,4):
-        img = Image.open(training_glioma[k])
+        img = Image.open(training_glioma[k]).convert('L')
         axs[i,j].imshow(img)
         axs[i,j].axis('off')
         k = k + 1
@@ -131,7 +114,7 @@ plt.title("Meningioma")
 k=0
 for i in range(0, 4):
     for j in range(0,4):
-        img = Image.open(training_meningioma[k])
+        img = Image.open(training_meningioma[k]).convert('L')
         axs[i,j].imshow(img)
         axs[i,j].axis('off')
         k = k + 1
@@ -145,7 +128,7 @@ plt.title("No Tumor")
 k=0
 for i in range(0, 4):
     for j in range(0,4):
-        img = Image.open(training_notumor[k])
+        img = Image.open(training_notumor[k]).convert('L')
         axs[i,j].imshow(img)
         axs[i,j].axis('off')
         k = k + 1
@@ -160,7 +143,7 @@ plt.title("Pituitary")
 k=0
 for i in range(0, 4):
     for j in range(0,4):
-        img = Image.open(training_pituitary[k])
+        img = Image.open(training_pituitary[k]).convert('L')
         axs[i,j].imshow(img)
         axs[i,j].axis('off')
         k = k + 1
@@ -175,21 +158,21 @@ for imgnum in range(0, 6):
         k=random.randint(0,1000)
         for j in range(0,4):
             if(i == 0):
-                img = Image.open(training_glioma[k])
+                img = Image.open(training_glioma[k]).convert('L')
                 axs[i,j].imshow(img)
                 axs[i,j].axis('off')
                 strk = "glioma: " + str(k)
                 axs[i,j].set_title(strk)
             
             elif i == 1:
-                img = Image.open(training_meningioma[k])
+                img = Image.open(training_meningioma[k]).convert('L')
                 axs[i,j].imshow(img)
                 axs[i,j].axis('off')
                 strk = "meningioma: " + str(k)
                 axs[i,j].set_title(strk)
         
             elif i == 2:
-                img = Image.open(training_notumor[k])
+                img = Image.open(training_notumor[k]).convert('L')
                 axs[i,j].imshow(img)
                 axs[i,j].axis('off')
                 strk = "notumor: " + str(k)
@@ -197,7 +180,7 @@ for imgnum in range(0, 6):
 
 
             elif i == 3:
-                img = Image.open(training_pituitary[k])
+                img = Image.open(training_pituitary[k]).convert('L')
                 axs[i,j].imshow(img)
                 axs[i,j].axis('off')
                 strk = "pituitary: " + str(k)
