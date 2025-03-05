@@ -55,7 +55,9 @@ for i in range(10,1457): #1456 images, first 10 ommitted
 # Convert training images into tensors 
 # ref: https://www.geeksforgeeks.org/converting-an-image-to-a-torch-tensor-in-python/
 transform = transforms.Compose([
+    transforms.toTensor(),
     transforms.Resize((1000,1000)),
+    transforms.grayscale(num_output_channels=1),
     transforms.RandomHorizontalFlip(p=0.5), 
     transforms.RandomRotation(degrees=15), 
     transforms.RandomResizedCrop(size=(512,512), scale=(0.8, 1.0), ratio=(0.75, 1.33)),
