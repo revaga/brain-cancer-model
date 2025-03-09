@@ -238,7 +238,7 @@ class CNNModel(torch.nn.Module):
     def __init__(self):
         super(CNNModel, self).__init__()
         # Convolutional layers
-        self.conv1 = torch.nn.Conv2d(3, 32, kernel_size=3, padding=1)
+        self.conv1 = torch.nn.Conv2d(1, 32, kernel_size=3, padding=1) # first input is 1 instead of 3 because 1 channel for grayscale
         self.conv2 = torch.nn.Conv2d(32, 64, kernel_size=3, padding=1)
         self.pool = torch.nn.MaxPool2d(kernel_size=2, stride=2)
         self.relu = torch.nn.ReLU()
