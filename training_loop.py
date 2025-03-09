@@ -109,11 +109,11 @@ for i in range(0,2):
 
 """
 
-# Convert training images into tensors 
-# ref: https://www.geeksforgeeks.org/converting-an-image-to-a-torch-tensor-in-python/
+# convert training images into tensors 
 transform = transforms.Compose([
     transforms.Resize((512, 512)),
-    transforms.PILToTensor()
+    transforms.ToTensor(),
+    #transforms.Grayscale(num_output_channels=1),  # Convert to grayscale
 ])
 
 traintensor_glioma = []
@@ -172,26 +172,6 @@ for i in range(0, len(testing_pituitary)):
     #print(img_tensor)
     testtensor_pituitary.append(img_tensor)
 
-
-
-# class BrainTumorDataset(Dataset):
-#     def __init__(self, images, labels, transform=None):
-#         self.images = images
-#         self.labels = labels
-#         self.transform = transform
-
-#     def __len__(self):
-#         return len(self.images)
-
-#     def __getitem__(self, idx):
-#         image = self.images[idx]
-#         label = self.labels[idx]
-
-#         if self.transform:
-#             image = self.transform(image)
-
-#         return image, label
-
 class BrainTumorDataset(Dataset):
     def __init__(self, images, labels, transform=None):
         self.images = images
@@ -205,7 +185,6 @@ class BrainTumorDataset(Dataset):
         image = self.images[idx]
         label = self.labels[idx]
 
-        # Convert to PIL Image if it's a tensor
         if isinstance(image, torch.Tensor):
             image = transforms.ToPILImage()(image)
 
@@ -247,6 +226,7 @@ class CNNModel(torch.nn.Module):
         self.flatten = torch.nn.Flatten()
         
         # Feedforward layers
+        # 128 * 128 is the size of the flattened output from the last pooling layer
         self.fc1 = torch.nn.Linear(64 * 128 * 128, 128)
         self.fc2 = torch.nn.Linear(128, 4) # 4 classes
 
@@ -266,20 +246,50 @@ class CNNModel(torch.nn.Module):
 
 
 
-# Training loop
-print("Training Data Batches:")
-for batch_idx, (inputs, labels) in enumerate(train_loader):
-    print(f"Batch {batch_idx + 1}:")
-    print("Inputs:", inputs.shape)  # Print shape of input images
-    print("Labels:", labels)  # Print labels
-    if batch_idx == 2:  # Print first 3 batches for readability
-        break
+# # Training loop
+# print("Training Data Batches:")
+# for batch_idx, (inputs, labels) in enumerate(train_loader):
+#     print(f"Batch {batch_idx + 1}:")
+#     print("Inputs:", inputs.shape)  # Print shape of input images
+#     print("Labels:", labels)  # Print labels
+#     if batch_idx == 2:  # Print first 3 batches for readability
+#         break
 
-# Testing loop
-print("\nTesting Data Batches:")
-for batch_idx, (inputs, labels) in enumerate(test_loader):
-    print(f"Batch {batch_idx + 1}:")
-    print("Inputs:", inputs.shape)  # Print shape of input images
-    print("Labels:", labels) 
-    if batch_idx == 2: 
-        break
+# # Testing loop
+# print("\nTesting Data Batches:")
+# for batch_idx, (inputs, labels) in enumerate(test_loader):
+#     print(f"Batch {batch_idx + 1}:")
+#     print("Inputs:", inputs.shape)  # Print shape of input images
+#     print("Labels:", labels) 
+#     if batch_idx == 2: 
+#         break
+
+# training loop
+model = CNNModel()
+#  loss function and optimizer
+criterion = torch.nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+# train model
+num_epochs = 25
+for epoch in range(num_epochs):
+    model.train()
+    current_loss = 0
+    correct = 0
+    total = 0
+    for inputs, labels in train_loader:
+        # zero gradients
+        optimizer.zero_grad()
+        # forward pass
+        outputs = model(inputs)
+        # compute loss
+        loss = criterion(outputs, labels)
+        # backward pass and optimization
+        loss.backward()
+        optimizer.step()
+        current_loss += loss.item()
+        _, predicted = torch.max(outputs.data, 1) #get the index of the max log-probability
+        total += labels.size(0)
+        correct += (predicted == labels).sum().item()
+    epoch_loss = current_loss / len(train_loader)
+    epoch_accuracy = correct / total
+    print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {epoch_loss:.4f}, Accuracy: {epoch_accuracy:.2f}")
