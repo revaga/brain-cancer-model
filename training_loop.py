@@ -13,6 +13,8 @@ import os
 
 from PIL import Image 
 import torchvision.transforms as transforms
+from torchvision.transforms import v2
+
 
 # create dataset class
 #class BrainTumorDataset(Dataset):
@@ -108,13 +110,27 @@ for i in range(0,2):
     img.show()
 
 """
-
+"""
+#old transforms
 # Convert training images into tensors 
 # ref: https://www.geeksforgeeks.org/converting-an-image-to-a-torch-tensor-in-python/
 transform = transforms.Compose([
-    transforms.Resize((512, 512)),
-    transforms.PILToTensor()
+    transforms.PILToTensor(),
+    transforms.Resize((256, 256)),
+    transforms.ConvertImageDtype(torch.float),
+    transforms.Grayscale(num_output_channels=1)
 ])
+"""
+
+#ref https://pytorch.org/vision/master/auto_examples/transforms/plot_transforms_getting_started.html
+transform = v2.Compose([ 
+    v2.PILToTensor(),
+    v2.Resize(size=(256, 256)),
+    v2.ToDtype(torch.float32),
+    v2.Grayscale(num_output_channels=1)
+])
+
+
 
 traintensor_glioma = []
 for i in range(0, len(training_glioma)):
@@ -269,17 +285,51 @@ class CNNModel(torch.nn.Module):
 # Training loop
 print("Training Data Batches:")
 for batch_idx, (inputs, labels) in enumerate(train_loader):
-    print(f"Batch {batch_idx + 1}:")
-    print("Inputs:", inputs.shape)  # Print shape of input images
-    print("Labels:", labels)  # Print labels
+    #print(f"Batch {batch_idx + 1}:")
+    #print("Inputs:", inputs.shape)  # Print shape of input images
+    #print("Labels:", labels)  # Print labels
     if batch_idx == 2:  # Print first 3 batches for readability
         break
 
 # Testing loop
 print("\nTesting Data Batches:")
 for batch_idx, (inputs, labels) in enumerate(test_loader):
-    print(f"Batch {batch_idx + 1}:")
-    print("Inputs:", inputs.shape)  # Print shape of input images
-    print("Labels:", labels) 
+    #print(f"Batch {batch_idx + 1}:")
+    #print("Inputs:", inputs.shape)  # Print shape of input images
+    #print("Labels:", labels) 
     if batch_idx == 2: 
         break
+
+
+
+
+
+model = CNNModel()
+
+criterion = torch.nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+
+
+num_epochs = 25
+for epoch in range(num_epochs):
+    model.train()
+    current_loss = 0
+    correct = 0
+    total = 0
+    for inputs, labels in train_loader:
+        # zero gradients
+        optimizer.zero_grad()
+        # forward pass
+        outputs = model(inputs)
+        # compute loss
+        loss = criterion(outputs, labels)
+        # backward pass and optimization
+        loss.backward()
+        optimizer.step()
+        current_loss += loss.item()
+        something, predicted = torch.max(outputs.data, 1) #get the index of the max log-probability
+        total += labels.size(0)
+        correct += (predicted == labels).sum().item()
+    epoch_loss = current_loss / len(train_loader)
+    epoch_accuracy = correct / total
+    print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {epoch_loss:.4f}, Accuracy: {epoch_accuracy:.2f}")
