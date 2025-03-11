@@ -188,26 +188,6 @@ for i in range(0, len(testing_pituitary)):
     #print(img_tensor)
     testtensor_pituitary.append(img_tensor)
 
-
-
-# class BrainTumorDataset(Dataset):
-#     def __init__(self, images, labels, transform=None):
-#         self.images = images
-#         self.labels = labels
-#         self.transform = transform
-
-#     def __len__(self):
-#         return len(self.images)
-
-#     def __getitem__(self, idx):
-#         image = self.images[idx]
-#         label = self.labels[idx]
-
-#         if self.transform:
-#             image = self.transform(image)
-
-#         return image, label
-
 class BrainTumorDataset(Dataset):
     def __init__(self, images, labels, transform=None):
         self.images = images
@@ -221,7 +201,6 @@ class BrainTumorDataset(Dataset):
         image = self.images[idx]
         label = self.labels[idx]
 
-        # Convert to PIL Image if it's a tensor
         if isinstance(image, torch.Tensor):
             image = transforms.ToPILImage()(image)
 
@@ -263,6 +242,7 @@ class CNNModel(torch.nn.Module):
         self.flatten = torch.nn.Flatten()
         
         # Feedforward layers
+        # 128 * 128 is the size of the flattened output from the last pooling layer
         self.fc1 = torch.nn.Linear(64 * 128 * 128, 128)
         self.fc2 = torch.nn.Linear(128, 4) # 4 classes
 
@@ -282,34 +262,30 @@ class CNNModel(torch.nn.Module):
 
 
 
-# Training loop
-print("Training Data Batches:")
-for batch_idx, (inputs, labels) in enumerate(train_loader):
-    #print(f"Batch {batch_idx + 1}:")
-    #print("Inputs:", inputs.shape)  # Print shape of input images
-    #print("Labels:", labels)  # Print labels
-    if batch_idx == 2:  # Print first 3 batches for readability
-        break
+# # Training loop
+# print("Training Data Batches:")
+# for batch_idx, (inputs, labels) in enumerate(train_loader):
+#     print(f"Batch {batch_idx + 1}:")
+#     print("Inputs:", inputs.shape)  # Print shape of input images
+#     print("Labels:", labels)  # Print labels
+#     if batch_idx == 2:  # Print first 3 batches for readability
+#         break
 
-# Testing loop
-print("\nTesting Data Batches:")
-for batch_idx, (inputs, labels) in enumerate(test_loader):
-    #print(f"Batch {batch_idx + 1}:")
-    #print("Inputs:", inputs.shape)  # Print shape of input images
-    #print("Labels:", labels) 
-    if batch_idx == 2: 
-        break
+# # Testing loop
+# print("\nTesting Data Batches:")
+# for batch_idx, (inputs, labels) in enumerate(test_loader):
+#     print(f"Batch {batch_idx + 1}:")
+#     print("Inputs:", inputs.shape)  # Print shape of input images
+#     print("Labels:", labels) 
+#     if batch_idx == 2: 
+#         break
 
-
-
-
-
+# training loop
 model = CNNModel()
-
+#  loss function and optimizer
 criterion = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
-
-
+# train model
 num_epochs = 25
 for epoch in range(num_epochs):
     model.train()
