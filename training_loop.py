@@ -126,35 +126,39 @@ transform = transforms.Compose([
 transform = v2.Compose([ 
     v2.PILToTensor(),
     v2.Resize(size=(256, 256)),
-    v2.ToDtype(torch.float32),
-    v2.Grayscale(num_output_channels=1)
+    v2.ConvertImageDtype(torch.float32), #convertDtype, toDtype
+    #v2.Grayscale(num_output_channels=1)
 ])
 
 
 
 traintensor_glioma = []
 for i in range(0, len(training_glioma)):
-    img = Image.open(training_glioma[i])
+    img = Image.open(training_glioma[i]).convert("L")
     img_tensor = transform(img)
     #print(img_tensor)
     traintensor_glioma.append(img_tensor)
 
+img = Image.open(training_glioma[0]) # Convert to grayscale immediately
+print(img.mode)  # Should now print 'L'
+
+
 traintensor_meningioma = []
 for i in range(0, len(training_meningioma)):
-    img = Image.open(training_meningioma[i])
+    img = Image.open(training_meningioma[i]).convert("L")
     img_tensor = transform(img)
     #print(img_tensor)
     traintensor_meningioma.append(img_tensor)
 
 traintensor_notumor = []
 for i in range(0, len(training_notumor)):
-    img = Image.open(training_notumor[i])
+    img = Image.open(training_notumor[i]).convert("L")
     img_tensor = transform(img)
     traintensor_notumor.append(img_tensor)
 
 traintensor_pituitary = []
 for i in range(0, len(training_pituitary)):
-    img = Image.open(training_pituitary[i])
+    img = Image.open(training_pituitary[i]).convert("L")
     img_tensor = transform(img)
     #print(img_tensor)
     traintensor_pituitary.append(img_tensor)
@@ -163,27 +167,27 @@ for i in range(0, len(training_pituitary)):
 # Convert testing images into tensors 
 testtensor_glioma = []
 for i in range(0, len(testing_glioma)):
-    img = Image.open(testing_glioma[i])
+    img = Image.open(testing_glioma[i]).convert("L")
     img_tensor = transform(img)
     #print(img_tensor)
     testtensor_glioma.append(img_tensor)
 
 testtensor_meningioma = []
 for i in range(0, len(testing_meningioma)):
-    img = Image.open(testing_meningioma[i])
+    img = Image.open(testing_meningioma[i]).convert("L")
     img_tensor = transform(img)
     #print(img_tensor)
     testtensor_meningioma.append(img_tensor)
 
 testtensor_notumor = []
 for i in range(0, len(testing_notumor)):
-    img = Image.open(testing_notumor[i])
+    img = Image.open(testing_notumor[i]).convert("L")
     img_tensor = transform(img)
     testtensor_notumor.append(img_tensor)
 
 testtensor_pituitary = []
 for i in range(0, len(testing_pituitary)):
-    img = Image.open(testing_pituitary[i])
+    img = Image.open(testing_pituitary[i]).convert("L")
     img_tensor = transform(img)
     #print(img_tensor)
     testtensor_pituitary.append(img_tensor)
@@ -233,17 +237,20 @@ class CNNModel(torch.nn.Module):
     def __init__(self):
         super(CNNModel, self).__init__()
         # Convolutional layers
-        self.conv1 = torch.nn.Conv2d(1, 32, kernel_size=3, padding=1) # first input is 1 instead of 3 because 1 channel for grayscale
+        self.conv1 = torch.nn.Conv2d(1, 32, kernel_size=3, padding=1)  # 1 input channel for grayscale
+
+        #self.conv1 = torch.nn.Conv2d(3, 32, kernel_size=3, padding=1) # first input is 1 instead of 3 because 1 channel for grayscale
         self.conv2 = torch.nn.Conv2d(32, 64, kernel_size=3, padding=1)
         self.pool = torch.nn.MaxPool2d(kernel_size=2, stride=2)
         self.relu = torch.nn.ReLU()
         
         # Flattening layer
         self.flatten = torch.nn.Flatten()
+        print("A")
         
         # Feedforward layers
         # 128 * 128 is the size of the flattened output from the last pooling layer
-        self.fc1 = torch.nn.Linear(64 * 128 * 128, 128)
+        self.fc1 = torch.nn.Linear(64 * 64 * 64, 128)
         self.fc2 = torch.nn.Linear(128, 4) # 4 classes
 
     def forward(self, x):
@@ -293,6 +300,7 @@ for epoch in range(num_epochs):
     correct = 0
     total = 0
     for inputs, labels in train_loader:
+        print("A")
         # zero gradients
         optimizer.zero_grad()
         # forward pass
