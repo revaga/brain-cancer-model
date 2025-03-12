@@ -9,6 +9,7 @@ import torch
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from torch.utils.data import Dataset, DataLoader
+import torchvision.transforms.v2 as v2
 import random
 
 from PIL import Image 
@@ -54,14 +55,27 @@ for i in range(10,1457): #1456 images, first 10 ommitted
 
 # Convert training images into tensors 
 # ref: https://www.geeksforgeeks.org/converting-an-image-to-a-torch-tensor-in-python/
-transform = transforms.Compose([
-    transforms.toTensor(),
+"""transform = transforms.Compose([
+    transforms.ToTensor(),
     transforms.Resize((1000,1000)),
-    transforms.grayscale(num_output_channels=1),
+    transforms.Grayscale(num_output_channels=1),
     transforms.RandomHorizontalFlip(p=0.5), 
     transforms.RandomRotation(degrees=15), 
     transforms.RandomResizedCrop(size=(512,512), scale=(0.8, 1.0), ratio=(0.75, 1.33)),
     ])
+    """
+
+
+
+transform2 = v2.Compose([ 
+    v2.PILToTensor(),
+    v2.Resize(size=(256, 256)),
+    v2.ConvertImageDtype(torch.float32), #convertDtype, toDtype
+    #v2.Grayscale(num_output_channels=1),
+    v2.RandomHorizontalFlip(p=0.5), 
+    v2.RandomRotation(degrees=50), 
+    v2.RandomResizedCrop(size=(512,512), scale=(0.8, 1.0), ratio=(0.75, 1.33)),
+])
 
 """
 for i in range(len(training_glioma)):
@@ -74,17 +88,26 @@ for i in range(len(training_meningioma)):
     newimg = transform(image)
     newimg.save(f"Training/meningioma/aug/Tr-me-aug_{i}.jpg")
 """
-
+img = Image.open(training_notumor[3])
+print(img.mode)  # Should now print 'RGB'
+img.show()
+print(f"Pre Image Shape: {img.size}")
 
 for i in range(len(training_notumor)):
-    image = Image.open(training_notumor[i])
-    newimg = transform(image)
-    newimg.save(f"Training/notumor/aug/Tr-no-aug_{i}.png")
-
-
+    image = Image.open(training_notumor[i]).convert("L")
+    newimg = transform2(image)
     
+    #newimg.save(f"Training/notumor/aug/Tr-no-aug_{i}.png")
+
+img = Image.open(training_notumor[3]) # Convert to grayscale immediately
+print(img.mode)  # Should now print 'L'
+print(f"Transformed Image Shape: {img.size}")
+img.show()
+    
+"""
 for i in range(len(training_pituitary)):
     image = Image.open(training_pituitary[i])
     newimg = transform(image)
-    newimg.save(f"Training/pituitary/aug/Tr-pi-aug_{i}.jpg")
+"""
+    #newimg.save(f"Training/pituitary/aug/Tr-pi-aug_{i}.jpg")
 

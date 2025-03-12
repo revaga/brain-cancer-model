@@ -1,19 +1,20 @@
 # creating CNN to predict brain cancer
 
 # importing libraries
+# importing libraries
 import numpy as np
 import pandas as pd
 import cv2
 import matplotlib.pyplot as plt
 import torch
-import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from torch.utils.data import Dataset, DataLoader
 import os
-
 from PIL import Image 
 import torchvision.transforms as transforms
-from torchvision.transforms import v2
+import torchvision
+import torchvision.transforms.v2 as v2
+
 
 
 # create dataset class
@@ -89,45 +90,15 @@ for i in range(10,300): #300 images, skipped first 10
     testing_pituitary.append("Testing/pituitary/Te-pi_" + val+ ".jpg")
     #print(testing_pituitary[i])
 
-"""
-#showing images
-
-for i in range(0,2):
-    img = Image.open(training_glioma[i])
-    img.show()
-
-
-for i in range(0,2):
-    img = Image.open(training_meningioma[i])
-    img.show()
-
-for i in range(0,2):
-    img = Image.open(training_notumor[i])
-    img.show()
-
-for i in range(0,2):
-    img = Image.open(training_pituitary[i])
-    img.show()
-
-"""
-"""
-#old transforms
-# Convert training images into tensors 
-# ref: https://www.geeksforgeeks.org/converting-an-image-to-a-torch-tensor-in-python/
-transform = transforms.Compose([
-    transforms.PILToTensor(),
-    transforms.Resize((256, 256)),
-    transforms.ConvertImageDtype(torch.float),
-    transforms.Grayscale(num_output_channels=1)
-])
-"""
-
 #ref https://pytorch.org/vision/master/auto_examples/transforms/plot_transforms_getting_started.html
 transform = v2.Compose([ 
     v2.PILToTensor(),
     v2.Resize(size=(256, 256)),
     v2.ConvertImageDtype(torch.float32), #convertDtype, toDtype
-    #v2.Grayscale(num_output_channels=1)
+    v2.Grayscale(num_output_channels=1),
+    v2.RandomHorizontalFlip(p=0.5), 
+    v2.RandomRotation(degrees=15), 
+    v2.RandomResizedCrop(size=(256,256), scale=(0.8, 1.0), ratio=(0.75, 1.33)),
 ])
 
 
@@ -139,8 +110,13 @@ for i in range(0, len(training_glioma)):
     #print(img_tensor)
     traintensor_glioma.append(img_tensor)
 
-img = Image.open(training_glioma[0]) # Convert to grayscale immediately
-print(img.mode)  # Should now print 'L'
+img_tensor = traintensor_glioma[0]
+print(img_tensor.shape) #should be 256x256
+
+#ref: https://pytorch.org/vision/main/generated/torchvision.transforms.v2.ToPILImage.html
+img_pil = v2.ToPILImage()(img_tensor)
+print(img_pil.mode)  # should be 'L' for grayscale
+img_pil.show()
 
 
 traintensor_meningioma = []
@@ -149,6 +125,7 @@ for i in range(0, len(training_meningioma)):
     img_tensor = transform(img)
     #print(img_tensor)
     traintensor_meningioma.append(img_tensor)
+
 
 traintensor_notumor = []
 for i in range(0, len(training_notumor)):
@@ -246,7 +223,6 @@ class CNNModel(torch.nn.Module):
         
         # Flattening layer
         self.flatten = torch.nn.Flatten()
-        print("A")
         
         # Feedforward layers
         # 128 * 128 is the size of the flattened output from the last pooling layer
@@ -300,7 +276,6 @@ for epoch in range(num_epochs):
     correct = 0
     total = 0
     for inputs, labels in train_loader:
-        print("A")
         # zero gradients
         optimizer.zero_grad()
         # forward pass
