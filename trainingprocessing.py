@@ -169,3 +169,89 @@ for i in range(0, len(testing_pituitary)):
     img_tensor = transform(img)
     #print(img_tensor)
     testtensor_pituitary.append(img_tensor)
+
+
+
+"""
+
+traintensor_glioma = []
+for i in range(0, len(training_glioma)):
+    img = Image.open(training_glioma[i]).convert("L")
+    img_tensor = transform(img)
+    #print(img_tensor)
+    traintensor_glioma.append(img_tensor)
+
+#https://pytorch.org/docs/stable/generated/torch.save.html
+torch.save(traintensor_glioma, "traintensor_glioma.pt")
+
+"""
+img_tensor = traintensor_glioma[0]
+print(img_tensor.shape) #should be 256x256
+
+#ref: https://pytorch.org/vision/main/generated/torchvision.transforms.v2.ToPILImage.html
+img_pil = v2.ToPILImage()(img_tensor)
+print(img_pil.mode)  # should be 'L' for grayscale
+img_pil.show()
+"""
+
+traintensor_meningioma = []
+for i in range(0, len(training_meningioma)):
+    img = Image.open(training_meningioma[i]).convert("L")
+    img_tensor = transform(img)
+    #print(img_tensor)
+    traintensor_meningioma.append(img_tensor)
+torch.save(traintensor_meningioma, "traintensor_meningioma.pt")
+
+
+traintensor_notumor = []
+for i in range(0, len(training_notumor)):
+    img = Image.open(training_notumor[i]).convert("L")
+    img_tensor = transform(img)
+    traintensor_notumor.append(img_tensor)
+torch.save(traintensor_notumor, "traintensor_notumor.pt")
+
+
+
+traintensor_pituitary = []
+for i in range(0, len(training_pituitary)):
+    img = Image.open(training_pituitary[i]).convert("L")
+    img_tensor = transform(img)
+    #print(img_tensor)
+    traintensor_pituitary.append(img_tensor)
+torch.save(traintensor_pituitary, "traintensor_pituitary.pt")
+
+
+# Convert testing images into tensors 
+testtensor_glioma = []
+for i in range(0, len(testing_glioma)):
+    img = Image.open(testing_glioma[i]).convert("L")
+    img_tensor = transform(img)
+    #print(img_tensor)
+    testtensor_glioma.append(img_tensor)
+torch.save(testtensor_glioma, "testtensor_glioma.pt")
+
+
+testtensor_meningioma = []
+for i in range(0, len(testing_meningioma)):
+    img = Image.open(testing_meningioma[i]).convert("L")
+    img_tensor = transform(img)
+    #print(img_tensor)
+    testtensor_meningioma.append(img_tensor)
+torch.save(testtensor_meningioma, "testtensor_meningioma.pt")
+
+
+testtensor_notumor = []
+for i in range(0, len(testing_notumor)):
+    img = Image.open(testing_notumor[i]).convert("L")
+    img_tensor = transform(img)
+    testtensor_notumor.append(img_tensor)
+torch.save(testtensor_notumor, "testtensor_notumor.pt")
+
+testtensor_pituitary = []
+for i in range(0, len(testing_pituitary)):
+    img = Image.open(testing_pituitary[i]).convert("L")
+    img_tensor = transform(img)
+    #print(img_tensor)
+    testtensor_pituitary.append(img_tensor)
+torch.save(testtensor_pituitary, "testtensor_pituitary.pt")
+"""

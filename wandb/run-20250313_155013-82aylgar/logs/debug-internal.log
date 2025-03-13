@@ -1,0 +1,7 @@
+{"time":"2025-03-13T15:50:14.018575325-07:00","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/home/reva/CMPM17-ML/brain-cancer-model/wandb/run-20250313_155013-82aylgar/logs/debug-core.log"}
+{"time":"2025-03-13T15:50:14.35859698-07:00","level":"INFO","msg":"created new stream","id":"82aylgar"}
+{"time":"2025-03-13T15:50:14.3587365-07:00","level":"INFO","msg":"stream: started","id":"82aylgar"}
+{"time":"2025-03-13T15:50:14.358843952-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"82aylgar"}
+{"time":"2025-03-13T15:50:14.359179221-07:00","level":"INFO","msg":"sender: started","stream_id":"82aylgar"}
+{"time":"2025-03-13T15:50:14.359237324-07:00","level":"INFO","msg":"handler: started","stream_id":"82aylgar"}
+{"time":"2025-03-13T15:50:15.327266375-07:00","level":"INFO","msg":"Starting system monitor"}

@@ -1,0 +1,70 @@
+Epoch [1/25], Loss: 1.4045
+Epoch [1/25], Loss: 8.3255
+Epoch [1/25], Loss: 13.5027
+Epoch [1/25], Loss: 6.8404
+Epoch [1/25], Loss: 2.8540
+Epoch [1/25], Loss: 1.6586
+Epoch [1/25], Loss: 1.5137
+Epoch [1/25], Loss: 1.7475
+Epoch [1/25], Loss: 1.8064
+Epoch [1/25], Loss: 1.4910
+Epoch [1/25], Loss: 1.5000
+Epoch [1/25], Loss: 1.3719
+Epoch [1/25], Loss: 1.3272
+Epoch [1/25], Loss: 1.3102
+Epoch [1/25], Loss: 1.2600
+Epoch [1/25], Loss: 1.3025
+Epoch [1/25], Loss: 1.2614
+Epoch [1/25], Loss: 1.2797
+Epoch [1/25], Loss: 1.1974
+Epoch [1/25], Loss: 1.3474
+Epoch [1/25], Loss: 1.2311
+Epoch [1/25], Loss: 1.1054
+Epoch [1/25], Loss: 1.1585
+Epoch [1/25], Loss: 1.2018
+Epoch [1/25], Loss: 1.0694
+Epoch [1/25], Loss: 1.1660
+Epoch [1/25], Loss: 0.9770
+Epoch [1/25], Loss: 1.0192
+Epoch [1/25], Loss: 1.1069
+Epoch [1/25], Loss: 1.0650
+Epoch [1/25], Loss: 1.0217
+Epoch [1/25], Loss: 0.8659
+Epoch [1/25], Loss: 1.0796
+Epoch [1/25], Loss: 0.8878
+Epoch [1/25], Loss: 0.9324
+Epoch [1/25], Loss: 1.0021
+Epoch [1/25], Loss: 0.7806
+Epoch [1/25], Loss: 1.0191
+Epoch [1/25], Loss: 0.7666
+Epoch [1/25], Loss: 0.8991
+Epoch [1/25], Loss: 0.6521
+Epoch [1/25], Loss: 0.6888
+Epoch [1/25], Loss: 0.8400
+Epoch [1/25], Loss: 0.9504
+Epoch [1/25], Loss: 0.9280
+Epoch [1/25], Loss: 0.9675
+Epoch [1/25], Loss: 0.8182
+Epoch [1/25], Loss: 0.5128
+Epoch [1/25], Loss: 0.7437
+Epoch [1/25], Loss: 0.5122
+Epoch [1/25], Loss: 0.7913
+Epoch [1/25], Loss: 0.5203
+Epoch [1/25], Loss: 0.7425
+Epoch [1/25], Loss: 0.4578
+Epoch [1/25], Loss: 0.7957
+Epoch [1/25], Loss: 0.5594
+Epoch [1/25], Loss: 0.8542
+Epoch [1/25], Loss: 0.5109
+Epoch [1/25], Loss: 0.7178
+Traceback (most recent call last):
+  File "/home/reva/CMPM17-ML/brain-cancer-model/training_loop.py", line 264, in <module>
+    loss.backward()
+  File "/home/reva/VENV-NAME/lib/python3.12/site-packages/torch/_tensor.py", line 626, in backward
+    torch.autograd.backward(
+  File "/home/reva/VENV-NAME/lib/python3.12/site-packages/torch/autograd/__init__.py", line 347, in backward
+    _engine_run_backward(
+  File "/home/reva/VENV-NAME/lib/python3.12/site-packages/torch/autograd/graph.py", line 823, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

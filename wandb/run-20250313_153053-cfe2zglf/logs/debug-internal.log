@@ -1,0 +1,7 @@
+{"time":"2025-03-13T15:30:53.871889334-07:00","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/home/reva/CMPM17-ML/brain-cancer-model/wandb/run-20250313_153053-cfe2zglf/logs/debug-core.log"}
+{"time":"2025-03-13T15:30:54.061933264-07:00","level":"INFO","msg":"created new stream","id":"cfe2zglf"}
+{"time":"2025-03-13T15:30:54.061999811-07:00","level":"INFO","msg":"stream: started","id":"cfe2zglf"}
+{"time":"2025-03-13T15:30:54.062049936-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"cfe2zglf"}
+{"time":"2025-03-13T15:30:54.062107628-07:00","level":"INFO","msg":"handler: started","stream_id":"cfe2zglf"}
+{"time":"2025-03-13T15:30:54.062373234-07:00","level":"INFO","msg":"sender: started","stream_id":"cfe2zglf"}
+{"time":"2025-03-13T15:30:54.447304568-07:00","level":"INFO","msg":"Starting system monitor"}
