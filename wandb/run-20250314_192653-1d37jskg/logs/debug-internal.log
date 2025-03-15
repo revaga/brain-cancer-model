@@ -1,0 +1,15 @@
+{"time":"2025-03-14T19:26:53.899676087-07:00","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/home/reva/CMPM17-ML/brain-cancer-model/wandb/run-20250314_192653-1d37jskg/logs/debug-core.log"}
+{"time":"2025-03-14T19:26:54.023756961-07:00","level":"INFO","msg":"created new stream","id":"1d37jskg"}
+{"time":"2025-03-14T19:26:54.023819326-07:00","level":"INFO","msg":"stream: started","id":"1d37jskg"}
+{"time":"2025-03-14T19:26:54.023842978-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"1d37jskg"}
+{"time":"2025-03-14T19:26:54.02385491-07:00","level":"INFO","msg":"handler: started","stream_id":"1d37jskg"}
+{"time":"2025-03-14T19:26:54.023896735-07:00","level":"INFO","msg":"sender: started","stream_id":"1d37jskg"}
+{"time":"2025-03-14T19:26:54.30795336-07:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-14T19:26:55.534847631-07:00","level":"INFO","msg":"stream: closing","id":"1d37jskg"}
+{"time":"2025-03-14T19:26:55.53532882-07:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-14T19:26:55.535830667-07:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-14T19:26:55.985890673-07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-14T19:26:56.0917771-07:00","level":"INFO","msg":"handler: closed","stream_id":"1d37jskg"}
+{"time":"2025-03-14T19:26:56.091838798-07:00","level":"INFO","msg":"writer: Close: closed","stream_id":"1d37jskg"}
+{"time":"2025-03-14T19:26:56.091877068-07:00","level":"INFO","msg":"sender: closed","stream_id":"1d37jskg"}
+{"time":"2025-03-14T19:26:56.091930431-07:00","level":"INFO","msg":"stream: closed","id":"1d37jskg"}

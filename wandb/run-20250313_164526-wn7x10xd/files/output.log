@@ -1,0 +1,51 @@
+Epoch [1/25], Loss: 1.3778
+Epoch [1/25], Loss: 9.3728
+Epoch [1/25], Loss: 4.0851
+Epoch [1/25], Loss: 2.4058
+Epoch [1/25], Loss: 1.7130
+Epoch [1/25], Loss: 1.6222
+Traceback (most recent call last):
+  File "/home/reva/CMPM17-ML/brain-cancer-model/training_loop.py", line 256, in <module>
+    for inputs, labels in train_loader:
+  File "/home/reva/VENV-NAME/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 708, in __next__
+    data = self._next_data()
+           ^^^^^^^^^^^^^^^^^
+  File "/home/reva/VENV-NAME/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 764, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/reva/VENV-NAME/lib/python3.12/site-packages/torch/utils/data/_utils/fetch.py", line 52, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+            ~~~~~~~~~~~~^^^^^
+  File "/home/reva/CMPM17-ML/brain-cancer-model/training_loop.py", line 137, in __getitem__
+    image = self.transform(image)
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/reva/VENV-NAME/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/reva/VENV-NAME/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/reva/VENV-NAME/lib/python3.12/site-packages/torchvision/transforms/v2/_container.py", line 51, in forward
+    outputs = transform(*inputs)
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/reva/VENV-NAME/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/reva/VENV-NAME/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/reva/VENV-NAME/lib/python3.12/site-packages/torchvision/transforms/v2/_transform.py", line 69, in forward
+    self.transform(inpt, params) if needs_transform else inpt
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/reva/VENV-NAME/lib/python3.12/site-packages/torchvision/transforms/v2/_geometry.py", line 627, in transform
+    return self._call_kernel(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/reva/VENV-NAME/lib/python3.12/site-packages/torchvision/transforms/v2/_transform.py", line 49, in _call_kernel
+    return kernel(inpt, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/reva/VENV-NAME/lib/python3.12/site-packages/torchvision/transforms/v2/functional/_geometry.py", line 1038, in rotate_image
+    grid = _affine_grid(theta, w=input_width, h=input_height, ow=output_width, oh=output_height)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/reva/VENV-NAME/lib/python3.12/site-packages/torchvision/transforms/v2/functional/_geometry.py", line 695, in _affine_grid
+    base_grid[..., 2].fill_(1)
+KeyboardInterrupt

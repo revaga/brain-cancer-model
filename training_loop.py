@@ -26,80 +26,105 @@ alltrainimgs = []
 
 training_glioma = []
 for i in range(10, 1321): #skipped first 10
-    val = str(i)
-    while(len(val) !=4):
-        val = "0"+val
-    training_glioma.append("Training/glioma/Tr-gl_" + val+ ".jpg")
-    alltrainimgs.append("Training/glioma/Tr-gl_" + val+ ".jpg")
+    value = str(i)
+    while(len(value) !=4):
+        value = "0"+value
+    training_glioma.append("Training/glioma/Tr-gl_" + value+ ".jpg")
+    alltrainimgs.append("Training/glioma/Tr-gl_" + value+ ".jpg")
 
     
 training_meningioma = []
 for i in range(10, 1339): #1338 images, skipped first 10
-    val = str(i)
-    while(len(val) !=4):
-        val = "0"+val
-    training_meningioma.append("Training/meningioma/Tr-me_" + val+ ".jpg")
-    alltrainimgs.append("Training/meningioma/Tr-me_" + val+ ".jpg")
+    value = str(i)
+    while(len(value) !=4):
+        value = "0"+value
+    training_meningioma.append("Training/meningioma/Tr-me_" + value+ ".jpg")
+    alltrainimgs.append("Training/meningioma/Tr-me_" + value+ ".jpg")
 
     
 training_notumor = []
 for i in range(10,1595): #1594 images, first 10 ommitted
-    val = str(i)
-    while(len(val) != 4):
-        val = "0" + val
-    training_notumor.append("Training/notumor/Tr-no_" + val+ ".jpg")
-    alltrainimgs.append("Training/notumor/Tr-no_" + val+ ".jpg")
+    value = str(i)
+    while(len(value) != 4):
+        value = "0" + value
+    training_notumor.append("Training/notumor/Tr-no_" + value+ ".jpg")
+    alltrainimgs.append("Training/notumor/Tr-no_" + value+ ".jpg")
     #print("Training/notumor/Tr-no_" + val+ ".jpg")
 
 
 
 training_pituitary = []
 for i in range(10,1457): #1456 images, first 10 ommitted
-    val = str(i)
-    while(len(val) != 4):
-        val = "0" + val
-    training_pituitary.append("Training/pituitary/Tr-pi_" + val+ ".jpg")
-    alltrainimgs.append("Training/pituitary/Tr-pi_" + val+ ".jpg")
+    value = str(i)
+    while(len(value) != 4):
+        value = "0" + value
+    training_pituitary.append("Training/pituitary/Tr-pi_" + value+ ".jpg")
+    alltrainimgs.append("Training/pituitary/Tr-pi_" + value+ ".jpg")
     #print(training_pituitary[i])
 
+
+
 alltestimgs = []
+allvalimgs = []
+
+allvallengths = [0,0,0,0]
 
 testing_glioma = []
 for i in range(10, 300): #300 images, skipped first 10
-    val = str(i)
-    while(len(val) !=4):
-        val = "0"+val
-    testing_glioma.append("Testing/glioma/Te-gl_" + val+ ".jpg")
-    alltestimgs.append("Testing/glioma/Te-gl_" + val+ ".jpg")
+    value = str(i)
+    while(len(value) !=4):
+        value = "0"+value
+    if(i < 150):
+        testing_glioma.append("Testing/glioma/Te-gl_" + value+ ".jpg")
+        alltestimgs.append("Testing/glioma/Te-gl_" + value+ ".jpg")
+    else:
+        allvalimgs.append("Testing/glioma/Te-gl_" + value+ ".jpg")
+        allvallengths[0] = allvallengths[0] + 1
+
 
     
 testing_meningioma = []
 for i in range(10, 306): #306 images, skipped first 10
-    val = str(i)
-    while(len(val) !=4):
-        val = "0"+val
-    testing_meningioma.append("Testing/meningioma/Te-me_" + val+ ".jpg")
-    alltestimgs.append("Testing/meningioma/Te-me_" + val+ ".jpg")
+    value = str(i)
+    while(len(value) !=4):
+        value = "0"+value
+    if(i < 153):
+        testing_meningioma.append("Testing/meningioma/Te-me_" + value+ ".jpg")
+        alltestimgs.append("Testing/meningioma/Te-me_" + value+ ".jpg")
+    else:
+        allvalimgs.append("Testing/meningioma/Te-me_" + value+ ".jpg")
+        allvallengths[1] = allvallengths[1] + 1
+
 
     
 testing_notumor = []
 for i in range(10,405): #405 images, skipped first 10
-    val = str(i)
-    while(len(val) != 4):
-        val = "0" + val
-    testing_notumor.append("Testing/notumor/Te-no_" + val+ ".jpg")
-    alltestimgs.append("Testing/notumor/Te-no_" + val+ ".jpg")
+    value = str(i)
+    while(len(value) != 4):
+        value = "0" + value
+    if(i < 202):
+        testing_notumor.append("Testing/notumor/Te-no_" + value+ ".jpg")
+        alltestimgs.append("Testing/notumor/Te-no_" + value+ ".jpg")
+    else:
+        allvalimgs.append("Testing/notumor/Te-no_" + value+ ".jpg")
+        allvallengths[2] = allvallengths[2] + 1
+
     #print("Training/notumor/Tr-no_" + val+ ".jpg")
 
 
 
 testing_pituitary = []
 for i in range(10,300): #300 images, skipped first 10
-    val = str(i)
-    while(len(val) != 4):
-        val = "0" + val
-    testing_pituitary.append("Testing/pituitary/Te-pi_" + val+ ".jpg")
-    alltestimgs.append("Testing/pituitary/Te-pi_" + val+ ".jpg")
+    value = str(i)
+    while(len(value) != 4):
+        value = "0" + value
+    if (i < 150):
+        testing_pituitary.append("Testing/pituitary/Te-pi_" + value+ ".jpg")
+        alltestimgs.append("Testing/pituitary/Te-pi_" + value+ ".jpg")
+    else:
+        allvalimgs.append("Testing/pituitary/Te-pi_" + value+ ".jpg")
+        allvallengths[3] = allvallengths[3] + 1
+
     #print(testing_pituitary[i])
 
 #ref https://pytorch.org/vision/master/auto_examples/transforms/plot_transforms_getting_started.html
@@ -161,20 +186,25 @@ testtensor_notumor = torch.load('testtensor_glioma.pt')
 # Use each instance to make a Dataloader using the PyTorch Dataloader class
 #train_images = traintensor_glioma + traintensor_meningioma + traintensor_notumor + traintensor_pituitary
 train_images = alltrainimgs
-print(len(alltrainimgs))
-print(len(training_glioma) + len(training_meningioma) + len(training_notumor) + len(training_pituitary))
+#print(len(alltrainimgs))
+#print(len(training_glioma) + len(training_meningioma) + len(training_notumor) + len(training_pituitary))
 train_labels = [0] * len(training_glioma) + [1] * len(training_meningioma) + [2] * len(training_notumor) + [3] * len(training_pituitary)
 train_dataset = BrainTumorDataset(train_images, train_labels, transform=transform)
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
-"""
-#temporarily comment out testing
-test_images = testing_glioma + testing_meningioma + testing_notumor + testing_pituitary
+
+
+test_images = alltestimgs
 test_labels = [0] * len(testing_glioma) + [1] * len(testing_meningioma) + [2] * len(testing_notumor) + [3] * len(testing_pituitary)
 test_dataset = BrainTumorDataset(test_images, test_labels, transform=transform)
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=True)
-"""
 
 
+val_imags = allvalimgs
+val_labels = [0] * allvallengths[0] + [1] * allvallengths[1] + [2] * allvallengths[2] + [3] * allvallengths[3]
+print(len(val_imags))
+print(len(val_labels))
+val_dataset = BrainTumorDataset(val_imags, val_labels, transform=transform)
+val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True)
 
 
 # Create a training loop and a testing loop over the data, using each Dataloader. Each loop should load a batch of data and print it
@@ -239,7 +269,7 @@ class CNNModel(torch.nn.Module):
 
 #WandB
 
-#run = wandb.init(project="CMPM17-BCM", name="run-trial1")
+run = wandb.init(project="CMPM17-BCM", name="run-thursday3")
 
 # training loop
 model = CNNModel()
@@ -247,12 +277,19 @@ model = CNNModel()
 criterion = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 # train model
-num_epochs = 25
+num_epochs = 2
 for epoch in range(num_epochs):
     model.train()
-    current_loss = 0
-    correct = 0
-    total = 0
+    train_current_loss = 0
+    train_correct = 0
+    train_total = 0
+
+
+    val_current_loss = 0
+    val_correct = 0
+    val_total = 0
+
+
     for inputs, labels in train_loader:
         # zero gradients
         optimizer.zero_grad()
@@ -263,14 +300,53 @@ for epoch in range(num_epochs):
         # backward pass and optimization
         loss.backward()
         optimizer.step()
-        current_loss += loss.item()
-        #run.log({"epoch": epoch, "currentloss": loss.item()})
+        train_current_loss += loss.item()
+        run.log({"train/smallloss": loss.item()})
         print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {loss.item():.4f}")
-        something, predicted = torch.max(outputs.data, 1) #get the index of the max log-probability
-        total += labels.size(0)
-        correct += (predicted == labels).sum().item()
-    epoch_loss = current_loss / len(train_loader)
-    epoch_accuracy = correct / total
-    #run.log({"epoch": epoch, "accuracy": epoch_accuracy, "loss": epoch_loss})
+        _, predicted = torch.max(outputs.data, 1) #get the index of the max log-probability
+        train_total += labels.size(0)
+        train_correct += (predicted == labels).sum().item()
+    epoch_loss = train_current_loss / len(train_loader)
+    epoch_accuracy = train_correct / train_total        
+    run.log({"train/totalloss": train_current_loss})
+    run.log({"train/accuracy": epoch_accuracy})
+    run.log({"train/epochloss": epoch_loss})
 
-   # print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {epoch_loss:.4f}, Accuracy: {epoch_accuracy:.2f}")
+    model.eval()
+    with torch.no_grad():
+        for val_inputs, val_labels in val_loader:
+            #validation
+            val_pred = model(val_inputs)
+            val_loss = criterion(val_pred, val_labels)
+            run.log({"val/smallloss": val_loss.item()})
+            val_current_loss += val_loss.item()
+            print(f"Epoch [{epoch + 1}/{num_epochs}], VAL Loss: {val_loss.item():.4f}")
+            _, val_predicted = torch.max(val_pred.data, 1)
+            val_total += val_labels.size(0)
+            val_correct += (val_predicted == val_labels).sum().item()
+        run.log({"val/accuracy": val_correct / val_total})
+        run.log({"val/totalloss": val_current_loss})
+        run.log({"val/epochloss": val_current_loss / len(val_loader)})
+
+
+#testing loop
+test_current_loss = 0
+test_correct = 0
+test_total = 0
+with torch.no_grad():
+    for inputs, labels in test_loader:
+        # forward pass
+        outputs = model(inputs)
+        # compute loss
+        loss = criterion(outputs, labels)
+
+        test_current_loss += loss.item()
+        run.log({"testsmallloss": loss.item()})
+        #print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {loss.item():.4f}")
+        _, predicted = torch.max(outputs.data, 1) #get the index of the max log-probability
+        test_total += labels.size(0)
+        test_correct += (predicted == labels).sum().item()
+    epoch_loss = test_current_loss / len(test_loader)
+    epoch_accuracy = test_correct / test_total
+    run.log({"testtotalloss": test_current_loss})
+    run.log({"testaccuracy": epoch_accuracy})

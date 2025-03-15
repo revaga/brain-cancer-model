@@ -1,0 +1,16 @@
+{"time":"2025-03-13T18:12:46.328608438-07:00","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/home/reva/CMPM17-ML/brain-cancer-model/wandb/run-20250313_181246-d7vpwt7g/logs/debug-core.log"}
+{"time":"2025-03-13T18:12:46.452877555-07:00","level":"INFO","msg":"created new stream","id":"d7vpwt7g"}
+{"time":"2025-03-13T18:12:46.45291475-07:00","level":"INFO","msg":"stream: started","id":"d7vpwt7g"}
+{"time":"2025-03-13T18:12:46.452977273-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"d7vpwt7g"}
+{"time":"2025-03-13T18:12:46.452994181-07:00","level":"INFO","msg":"sender: started","stream_id":"d7vpwt7g"}
+{"time":"2025-03-13T18:12:46.453225241-07:00","level":"INFO","msg":"handler: started","stream_id":"d7vpwt7g"}
+{"time":"2025-03-13T18:12:46.682472002-07:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-13T19:23:59.734985779-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": read tcp 172.18.179.62:45760->35.186.228.49:443: read: connection reset by peer"}
+{"time":"2025-03-13T19:28:48.622976475-07:00","level":"INFO","msg":"stream: closing","id":"d7vpwt7g"}
+{"time":"2025-03-13T19:28:48.62385074-07:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-13T19:28:48.637333646-07:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-13T19:28:49.235178455-07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-13T19:28:49.361900051-07:00","level":"INFO","msg":"handler: closed","stream_id":"d7vpwt7g"}
+{"time":"2025-03-13T19:28:49.362012183-07:00","level":"INFO","msg":"writer: Close: closed","stream_id":"d7vpwt7g"}
+{"time":"2025-03-13T19:28:49.362462735-07:00","level":"INFO","msg":"sender: closed","stream_id":"d7vpwt7g"}
+{"time":"2025-03-13T19:28:49.362586505-07:00","level":"INFO","msg":"stream: closed","id":"d7vpwt7g"}

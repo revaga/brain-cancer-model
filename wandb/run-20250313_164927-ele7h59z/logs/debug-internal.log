@@ -1,0 +1,16 @@
+{"time":"2025-03-13T16:49:27.40041873-07:00","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"/home/reva/CMPM17-ML/brain-cancer-model/wandb/run-20250313_164927-ele7h59z/logs/debug-core.log"}
+{"time":"2025-03-13T16:49:27.604253358-07:00","level":"INFO","msg":"created new stream","id":"ele7h59z"}
+{"time":"2025-03-13T16:49:27.604389-07:00","level":"INFO","msg":"stream: started","id":"ele7h59z"}
+{"time":"2025-03-13T16:49:27.604479941-07:00","level":"INFO","msg":"writer: Do: started","stream_id":"ele7h59z"}
+{"time":"2025-03-13T16:49:27.604711449-07:00","level":"INFO","msg":"handler: started","stream_id":"ele7h59z"}
+{"time":"2025-03-13T16:49:27.604748275-07:00","level":"INFO","msg":"sender: started","stream_id":"ele7h59z"}
+{"time":"2025-03-13T16:49:28.996713891-07:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-13T16:50:29.91207473-07:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/reagarwa-ucsc/CMPM17-BCM/ele7h59z/file_stream\": EOF"}
+{"time":"2025-03-13T16:56:04.345749657-07:00","level":"INFO","msg":"stream: closing","id":"ele7h59z"}
+{"time":"2025-03-13T16:56:04.346349959-07:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-13T16:56:04.352163327-07:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-13T16:56:07.690047567-07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-13T16:56:07.859584667-07:00","level":"INFO","msg":"handler: closed","stream_id":"ele7h59z"}
+{"time":"2025-03-13T16:56:07.859743391-07:00","level":"INFO","msg":"writer: Close: closed","stream_id":"ele7h59z"}
+{"time":"2025-03-13T16:56:07.859980709-07:00","level":"INFO","msg":"sender: closed","stream_id":"ele7h59z"}
+{"time":"2025-03-13T16:56:07.860221318-07:00","level":"INFO","msg":"stream: closed","id":"ele7h59z"}
