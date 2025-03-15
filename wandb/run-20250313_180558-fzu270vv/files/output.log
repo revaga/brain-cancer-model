@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "/home/reva/CMPM17-ML/brain-cancer-model/training_loop.py", line 295, in <module>
-    print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {loss.item():.4f}")
-                    ^^^^^
-NameError: name 'epoch' is not defined
