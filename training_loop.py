@@ -15,7 +15,7 @@ import torchvision.transforms as transforms
 import torchvision
 import torchvision.transforms.v2 as v2
 import wandb
-
+from torch.optim.lr_scheduler import ExponentialLR as Explr
 
 
 # create dataset class
@@ -275,7 +275,8 @@ run = wandb.init(project="CMPM17-BCM", name="run-thursday3")
 model = CNNModel()
 #  loss function and optimizer
 criterion = torch.nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001, weight_decay=0.01)
+scheduler = Explr(optimizer, gamma=0.9)
 # train model
 num_epochs = 2
 for epoch in range(num_epochs):
@@ -303,9 +304,10 @@ for epoch in range(num_epochs):
         train_current_loss += loss.item()
         run.log({"train/smallloss": loss.item()})
         print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {loss.item():.4f}")
-        _, predicted = torch.max(outputs.data, 1) #get the index of the max log-probability
+        _, predicted = torch.max(outputs.data, 1) # gives the index of the max log-probability - the predicted class
         train_total += labels.size(0)
         train_correct += (predicted == labels).sum().item()
+        scheduler.step()
     epoch_loss = train_current_loss / len(train_loader)
     epoch_accuracy = train_correct / train_total        
     run.log({"train/totalloss": train_current_loss})
