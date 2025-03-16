@@ -17,9 +17,11 @@ import torchvision.transforms.v2 as v2
 import wandb
 from torch.optim.lr_scheduler import ExponentialLR as Explr
 
+import torch
 
-# create dataset class
-#class BrainTumorDataset(Dataset):
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"Using device: {device}")
+
 
 alltrainimgs = []
 
@@ -190,13 +192,13 @@ train_images = alltrainimgs
 #print(len(training_glioma) + len(training_meningioma) + len(training_notumor) + len(training_pituitary))
 train_labels = [0] * len(training_glioma) + [1] * len(training_meningioma) + [2] * len(training_notumor) + [3] * len(training_pituitary)
 train_dataset = BrainTumorDataset(train_images, train_labels, transform=transform)
-train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, pin_memory=True, num_workers=4) # added pin_memory=True and num_workers for DataLoader
 
 
 test_images = alltestimgs
 test_labels = [0] * len(testing_glioma) + [1] * len(testing_meningioma) + [2] * len(testing_notumor) + [3] * len(testing_pituitary)
 test_dataset = BrainTumorDataset(test_images, test_labels, transform=transform)
-test_loader = DataLoader(test_dataset, batch_size=32, shuffle=True)
+test_loader = DataLoader(test_dataset, batch_size=32, shuffle=True, pin_memory=True, num_workers=4) # added pin_memory=True and num_workers for DataLoader
 
 
 val_imags = allvalimgs
@@ -204,7 +206,7 @@ val_labels = [0] * allvallengths[0] + [1] * allvallengths[1] + [2] * allvallengt
 print(len(val_imags))
 print(len(val_labels))
 val_dataset = BrainTumorDataset(val_imags, val_labels, transform=transform)
-val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True)
+val_loader = DataLoader(val_dataset, batch_size=32, shuffle=True, pin_memory=True, num_workers=4) # added pin_memory=True and num_workers for DataLoader
 
 
 # Create a training loop and a testing loop over the data, using each Dataloader. Each loop should load a batch of data and print it
@@ -271,14 +273,20 @@ class CNNModel(torch.nn.Module):
 
 run = wandb.init(project="CMPM17-BCM", name="run-thursday3")
 
+
 # training loop
 model = CNNModel()
+# move model to GPU
+model.to(device)
+# print to check
+print(f"Model is on device: {next(model.parameters()).device}")
+
 #  loss function and optimizer
 criterion = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001, weight_decay=0.01)
 scheduler = Explr(optimizer, gamma=0.9)
 # train model
-num_epochs = 2
+num_epochs = 10
 for epoch in range(num_epochs):
     model.train()
     train_current_loss = 0
@@ -292,6 +300,8 @@ for epoch in range(num_epochs):
 
 
     for inputs, labels in train_loader:
+        # move data to GPU
+        inputs, labels = inputs.to(device), labels.to(device)
         # zero gradients
         optimizer.zero_grad()
         # forward pass
@@ -317,6 +327,8 @@ for epoch in range(num_epochs):
     model.eval()
     with torch.no_grad():
         for val_inputs, val_labels in val_loader:
+            # move data to GPU
+            val_inputs, val_labels = val_inputs.to(device), val_labels.to(device)
             #validation
             val_pred = model(val_inputs)
             val_loss = criterion(val_pred, val_labels)
