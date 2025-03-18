@@ -1,21 +1,10 @@
-# creating CNN to predict brain cancer
+# displaying data
 
 # importing libraries
-import numpy as np
-import pandas as pd
-import cv2
 import matplotlib.pyplot as plt
-import torch
-import pandas as pd
-from sklearn.preprocessing import StandardScaler
-from torch.utils.data import Dataset, DataLoader
 import random
-
 from PIL import Image 
 import torchvision.transforms as transforms
-
-# create dataset class
-#class BrainTumorDataset(Dataset):
 
 
 training_glioma = []
@@ -50,6 +39,7 @@ for i in range(10,1457): #1456 images, first 10 ommitted
         val = "0" + val
     training_pituitary.append("Training/pituitary/Tr-pi_" + val+ ".jpg")
     #print(training_pituitary[i])
+    
 """
 #showing images
 
@@ -62,7 +52,7 @@ for i in range(0,2):
 # ref: https://www.geeksforgeeks.org/converting-an-image-to-a-torch-tensor-in-python/
 transform = transforms.Compose([
     transforms.PILToTensor(),
-    transforms.Resize((1000,1000))
+    transforms.Resize((256,256))
 ])
 
 traintensor_glioma = []
