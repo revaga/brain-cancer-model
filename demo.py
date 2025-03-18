@@ -63,6 +63,7 @@ for i in imgpaths:
     ])
 
     with torch.no_grad(): #don't update model based on output
+        image_tensor = transform(image).unsqueeze(0)  #unsqueeze because dimension issues
         output = model(image_tensor)
 
     probabilities = torch.nn.functional.softmax(output[0], dim=0) #ref: https://pytorch.org/docs/stable/generated/torch.nn.functional.softmax.html
