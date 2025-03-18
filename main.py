@@ -1,16 +1,10 @@
 # creating CNN to predict brain cancer
 
 # importing libraries
-import numpy as np
-import pandas as pd
-import cv2
-import matplotlib.pyplot as plt
 import torch
-from sklearn.preprocessing import StandardScaler
 from torch.utils.data import Dataset, DataLoader
 from PIL import Image 
 import torchvision.transforms as transforms
-import torchvision
 import torchvision.transforms.v2 as v2
 import wandb
 
@@ -132,18 +126,18 @@ for i in range(10, 300):  # 300 images, skipped first 10
 
 # Transformations for training
 transform = v2.Compose([
-    v2.PILToTensor(),
+    v2.PILToTensor(), # ref: https://www.geeksforgeeks.org/converting-an-image-to-a-torch-tensor-in-python/
     v2.Resize(size=(256, 256), antialias=True), #to keep image size consistent
     v2.ConvertImageDtype(torch.float32), #to keep tensor types consistent, ref: https://pytorch.org/vision/main/generated/torchvision.transforms.v2.ConvertImageDtype.html
-    v2.RandomHorizontalFlip(p=0.5),
-    v2.RandomRotation(degrees=15),
+    v2.RandomHorizontalFlip(p=0.5), #https://pytorch.org/vision/main/generated/torchvision.transforms.RandomHorizontalFlip.html
+    v2.RandomRotation(degrees=15), #https://pytorch.org/vision/0.15/generated/torchvision.transforms.v2.RandomRotation.html
 ])
 
 # Transformations for validation and testing, no data augmentations except resize(for consistency)
 val_transform = v2.Compose([
-    v2.PILToTensor(),
-    v2.Resize(size=(256, 256), antialias=True),
-    v2.ConvertImageDtype(torch.float32),
+    v2.PILToTensor(), # ref: https://www.geeksforgeeks.org/converting-an-image-to-a-torch-tensor-in-python/
+    v2.Resize(size=(256, 256), antialias=True), #resize & torch type to keep consisent
+    v2.ConvertImageDtype(torch.float32) # ref: https://pytorch.org/vision/main/generated/torchvision.transforms.v2.ConvertImageDtype.html
 ])
 
 
@@ -224,7 +218,7 @@ class CNNModel(torch.nn.Module):
         
         return x
 
-# WandB initialization
+# WandB initialization to keep logs of model progress
 run = wandb.init(project="CMPM17-BCM", name="run")
 
 # Training loop
