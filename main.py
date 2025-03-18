@@ -142,28 +142,34 @@ val_transform = v2.Compose([
 
 
 class BrainTumorDataset(Dataset):
-    def __init__(self, images, labels, transform=None):
+    # dataset class for brain tumor images
+    def __init__(self, images, labels, transform=None): #
         self.images = images
         self.labels = labels
         self.transform = transform
 
+    # get length of dataset
     def __len__(self):
         return len(self.images)
 
     def __getitem__(self, idx):
-        image = Image.open(self.images[idx]).convert("L")
-        label = self.labels[idx]
+        image = Image.open(self.images[idx]).convert("L") # convert to grayscale
+        label = self.labels[idx] # get label for image
 
+        # convert image to tensor if it's not already
         if isinstance(image, torch.Tensor):
             image = transforms.ToPILImage()(image)
 
+        # apply transformations if specified
         if self.transform:
             image = self.transform(image)
 
         return image, label
 
 # Create instances of the dataset and dataloaders
-#creating labels, batching data, and creating dataloader for training data
+# creating labels, batching data, and creating dataloader for training data
+# turn categorical labels into numerical labels
+# glioma: 0, meningioma: 1, no tumor: 2, pituitary: 3
 train_labels = [0] * len(training_glioma) + [1] * len(training_meningioma) + [2] * len(training_notumor) + [3] * len(training_pituitary)
 train_dataset = BrainTumorDataset(train_images, train_labels, transform=transform)
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, pin_memory=True, num_workers=4)
@@ -185,7 +191,8 @@ class CNNModel(torch.nn.Module):
         # Convolutional layers
         self.conv1 = torch.nn.Conv2d(1, 32, kernel_size=3, padding=1)  # First convolutional layer, maintains size
         self.conv2 = torch.nn.Conv2d(32, 64, kernel_size=3, padding=1)  # Second convolutional layer
-        # self.bn1 = torch.nn.BatchNorm2d(32)
+        # batch normilization decreased accuracy, so we left it out
+        # self.bn1 = torch.nn.BatchNorm2d(32) 
         # self.bn2 = torch.nn.BatchNorm2d(64)
         self.pool = torch.nn.MaxPool2d(kernel_size=2, stride=2)
         self.relu = torch.nn.ReLU()
@@ -194,27 +201,27 @@ class CNNModel(torch.nn.Module):
         self.flatten = torch.nn.Flatten()
         
         # Feedforward layers
-        self.fc1 = torch.nn.Linear(64 * 64 * 64, 128)  # Adjusted for flattened output
+        self.fc1 = torch.nn.Linear(64 * 64 * 64, 128)  # adjusted for flattened output
         self.fc2 = torch.nn.Linear(128, 4)  # 4 classes (glioma: 0, meningioma: 1, no tumor: 2, pituitary: 3)
         self.dropout = torch.nn.Dropout(p=0.5)  # Added dropout layer
 
     def forward(self, x):
         # Convolutional layers
-        x = self.conv1(x)
-        x = self.relu(x)
-        x = self.pool(x)
+        x = self.conv1(x) # first convolutional layer
+        x = self.relu(x) # activation function, adds non-linearity
+        x = self.pool(x) # pooling layer, reduces size
         
-        x = self.conv2(x)
-        x = self.relu(x)
-        x = self.pool(x)
+        x = self.conv2(x) # second convolutional layer
+        x = self.relu(x) # activation function, adds non-linearity
+        x = self.pool(x) # pooling layer, reduces size
         
         # Flattening layer
-        x = self.flatten(x)
+        x = self.flatten(x) # flattening layer to convert 1D vector
         
         # Feedforward layers
-        x = self.relu(self.fc1(x))
+        x = self.relu(self.fc1(x)) # first feedforward layer and activation function
         x = self.dropout(x)  #dropout to improve model's learning
-        x = self.fc2(x)
+        x = self.fc2(x) # second feedforward layer
         
         return x
 
@@ -233,13 +240,14 @@ criterion = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
 # Train model
-num_epochs = 30
-for epoch in range(num_epochs):
+num_epochs = 30 # number of times training data is iterated over, after 30 it flattened out
+for epoch in range(num_epochs): 
     model.train() #training mode
+    # reset loss and accuracy for each epoch
     train_current_loss = 0
-    train_correct = 0
+    train_correct = 0 
     train_total = 0
-
+    # validation loss and accuracy
     val_current_loss = 0
     val_correct = 0
     val_total = 0
@@ -256,15 +264,17 @@ for epoch in range(num_epochs):
         # Backward pass and optimization
         loss.backward()
         optimizer.step()
-        train_current_loss += loss.item()
+        train_current_loss += loss.item() # add loss to total loss for epoch
         
         _, predicted = torch.max(outputs.data, 1)  # Predicted class
-        train_total += labels.size(0)
-        train_correct += (predicted == labels).sum().item()
+        train_total += labels.size(0) # total number of labels
+        train_correct += (predicted == labels).sum().item() # correct predictions
 
+    # get training loss and accuracy
     epoch_loss = train_current_loss / len(train_loader)
     epoch_accuracy = train_correct / train_total        
     
+    # log training loss and accuracy
     run.log({"train/accuracy": epoch_accuracy})
     run.log({"train/epochloss": epoch_loss})
 
@@ -286,6 +296,7 @@ for epoch in range(num_epochs):
         run.log({"val/accuracy": val_correct / val_total})
         run.log({"val/epochloss": val_current_loss / len(val_loader)})
 
+# save model after training
 torch.save(model.state_dict(), "brain_tumor_cnn.pth")
 print("model saved")
 
@@ -296,7 +307,7 @@ model.load_state_dict(torch.load("brain_tumor_cnn.pth"))
 model.eval()  # evaluation mode
 print("model loaded")
 
-# Testing loop
+# Testing loop 
 test_current_loss = 0
 test_correct = 0
 test_total = 0
@@ -310,12 +321,14 @@ with torch.no_grad():
         loss = criterion(outputs, labels)
         test_current_loss += loss.item()        
         _, predicted = torch.max(outputs.data, 1)  # Predicted class
-        test_total += labels.size(0)
-        test_correct += (predicted == labels).sum().item()
+        test_total += labels.size(0) # total number of labels
+        test_correct += (predicted == labels).sum().item() # correct predictions
     
+    # calculatee testing loss and accuracy
     epoch_loss = test_current_loss / len(test_loader)
     epoch_accuracy = test_correct / test_total
-    
+
+    # log testing loss and accuracy
     print(f"Test Loss: {epoch_loss:.4f}, Test Accuracy: {epoch_accuracy:.4f}")
     run.log({"testtotalloss": test_current_loss})
     run.log({"testaccuracy": epoch_accuracy})
